@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+
+    <h:head>
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    </h:head>
+
+    <h:body>
+
+        <p:menubar>
+            <f:facet name="start">
+                <h:link value="KeyStore" outcome="index" style="font-weight:bold; font-size:32px " />
+            </f:facet>
+            <f:facet name="end">
+                <h:link value="New Product" outcome="addProduct" style="margin-right:15px;" />
+                <p:divider layout="vertical"/>
+                <h:link value="Register" outcome="register" style="margin-left:15px;" />
+            </f:facet>
+        </p:menubar>
+
+
+        <p:outputPanel id="loginContainer" style="display: flex; justify-content: center; align-items: center; min-height: 70vh; margin: 3rem 0;">
+
+            <p:panel header="Sign In" style="width: 100%; max-width: 450px;">
+
+                <h:form>
+                    <p:messages id="messages" showDetail="true" closable="true">
+                        <p:autoUpdate />
+                    </p:messages>
+
+                    <h:panelGrid columns="1" style="width: 100%; margin-bottom: 1.5rem;" styleClass="ui-fluid">
+
+                        <p:outputLabel for="email" value="Email" style="font-weight: bold;" />
+                        <p:inputText id="email" value="#{loginBean.email}" required="true" />
+
+                        <p:spacer height="10" />
+
+                        <p:outputLabel for="password" value="Password" style="font-weight: bold;" />
+                        <p:password id="password" value="#{loginBean.password}" required="true" feedback="false" />
+
+                    </h:panelGrid>
+
+                    <p:commandButton value="Login" 
+                                     action="#{loginBean.login}" 
+                                     ajax="false" 
+                                     style="width: 100%;" 
+                                     icon="pi pi-sign-in" />
+                </h:form>
+
+                <f:facet name="footer">
+                    <h:panelGroup style="display: block; text-align: center; font-size: 0.85rem;">
+                        <h:outputText value="No account? " style="color: #666;" />
+                        <p:link outcome="register.xhtml" value="Register here" style="font-weight: bold;" />
+                    </h:panelGroup>
+                </f:facet>
+
+            </p:panel>
+
+        </p:outputPanel>
+
+    </h:body>
+</html>

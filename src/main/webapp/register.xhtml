@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+
+    <h:head>
+        <title>Register</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    </h:head>
+    <h:body>
+
+        <p:menubar>
+            <f:facet name="start">
+                <h:link value="KeyStore" outcome="index" style="font-weight:bold; font-size:32px " />
+            </f:facet>
+            <f:facet name="end">
+                <h:link value="New Product" outcome="addProduct" style="margin-right:15px;" />
+                <p:divider layout="vertical"/>
+                <h:link value="Register" outcome="register" style="margin-left:15px;" />
+            </f:facet>
+        </p:menubar>
+
+
+        <p:outputPanel id="mainContainer" style="display: flex; justify-content: center; align-items: center; min-height: 70vh; margin: 3rem 0;">
+
+            <p:panel header="Sign Up" style="width: 100%; max-width: 500px;">
+
+                <h:form>
+                    <p:messages id="messages" showDetail="true" closable="true">
+                        <p:autoUpdate />
+                    </p:messages>
+
+                    <h:panelGrid columns="1" style="width: 100%; margin-bottom: 1rem;" styleClass="ui-fluid">
+
+                        <p:outputLabel for="name" value="Name" />
+                        <p:inputText id="name" value="#{registerBean.customer.name}" required="true" />
+
+                        <p:spacer height="10" />
+
+                        <p:outputLabel for="email" value="Email" />
+                        <p:inputText id="email" value="#{registerBean.customer.email}" required="true" />
+
+                        <p:spacer height="10" />
+
+                        <p:outputLabel for="password" value="Password" />
+                        <p:password id="password" value="#{registerBean.customer.password}" feedback="true" required="true" />
+
+                        <p:spacer height="10" />
+
+                        <p:outputLabel for="address" value="Address" />
+                        <p:inputTextarea id="address" value="#{registerBean.customer.address}" rows="3" autoResize="false" />
+
+                        <p:spacer height="10" />
+
+                        <p:outputLabel for="telephone" value="Telephone" />
+                        <p:inputText id="telephone" value="#{registerBean.customer.telephone}" />
+
+                    </h:panelGrid>
+
+                    <p:commandButton value="Register" 
+                                     action="#{registerBean.register}" 
+                                     ajax="false" 
+                                     style="width: 100%;" 
+                                     icon="pi pi-user-plus" />
+                </h:form>
+
+                <f:facet name="footer">
+                    <h:outputText value="Already have an account? " style="font-size: 0.8rem;" />
+                    <p:link outcome="login.xhtml" value="Login here" style="font-size: 0.8rem; font-weight: bold;" />
+                </f:facet>
+
+            </p:panel>
+
+        </p:outputPanel>
+    </h:body>
+</html>

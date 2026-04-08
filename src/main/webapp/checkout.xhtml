@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="style.css" />
+        <title>Checkout</title>
+    </h:head>
+
+    <f:metadata>
+        <f:viewParam name="orderId" value="#{orderBean.id}" />
+        <f:viewAction action="#{orderBean.load}" />
+    </f:metadata>
+
+
+    <h:body>
+        <p:menubar>
+            <f:facet name="start">
+                <h:link value="KeyStore" outcome="index" style="font-weight:bold; font-size:32px " />
+            </f:facet>
+            <f:facet name="end">
+                <h:link value="New Product" outcome="addProduct" style="margin-right:15px;" />
+                <h:link value="Register" outcome="register" style="margin-left:15px;" />
+            </f:facet>
+        </p:menubar>
+
+        <p:outputPanel id="checkoutContainer" style="max-width: 1200px; margin: 2rem auto; padding: 0 1rem;">
+
+            <p:outputPanel id="header" style="margin-bottom: 1.5rem; border-bottom: 1px solid #dee2e6; padding-bottom: 1rem;">
+                <h1 style="font-size: 1.875rem; font-weight: bold; margin: 0; color: #212529;">Checkout</h1>
+                <h:outputText value="Review your order." style="font-size: 0.875rem; color: #6c757d; margin-top: 0.25rem; display: block;" />
+            </p:outputPanel>
+
+            <h:panelGroup id="mainContent" layout="block" style="display: flex; gap: 2rem;">
+
+                <p:panel id="orderTableWrapper" style="flex: 1; padding: 0;">
+
+                    <h:panelGrid columns="2" style="width: 100%; background-color: #f8f9fa; padding: 0.75rem 1.25rem; font-weight: bold; color: #495057;">
+                        <h:outputText value="Product" />
+                        <h:outputText value="Price" style="float: right;" />
+                    </h:panelGrid>
+
+                    <p:divider style="margin: 0;" />
+
+                    <h:panelGrid columns="2" style="width: 100%; padding: 1.25rem;">
+                        <h:panelGroup style="display: flex; align-items: center; gap: 1rem;">
+                            <p:outputPanel style="width: 64px; height: 64px; border: 1px solid #dee2e6; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #fff;">
+                                <p:graphicImage value="/resources/images/placeholder.png" style="width: 100%; height: 100%; object-fit: contain;" />
+                            </p:outputPanel>
+                            <h:outputText value="#{orderBean.order.productName}" style="font-size: 0.875rem; font-weight: 500;" />
+                        </h:panelGroup>
+
+                        <h:outputText value="#{orderBean.order.productPrice}" style="float: right; font-size: 0.875rem; font-weight: 500; color: #495057;">
+                            <f:convertNumber type="currency" currencySymbol="฿" />
+                        </h:outputText>
+                    </h:panelGrid>
+
+                    <p:divider />
+
+                    <h:panelGrid columns="2" style="width: 100%; padding: 0.75rem 1.25rem;">
+                        <h:outputText value="Total" style="font-size: 0.875rem; color: #6c757d;" />
+                        <h:outputText value="#{orderBean.order.productPrice}" style="float: right; font-size: 1.125rem; font-weight: bold; color: #212529;">
+                            <f:convertNumber type="currency" currencySymbol="฿" />
+                        </h:outputText>
+                    </h:panelGrid>
+
+                </p:panel>
+
+            </h:panelGroup>
+
+            <p:outputPanel style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+                <p:button outcome="success" 
+                          value="Checkout" 
+                          icon="pi pi-check-circle"
+                          styleClass="ui-button-raised ui-button-success"
+                          style="padding: 0.5rem 2rem;">
+                    <f:param name="orderId" value="#{orderBean.order.id}" />
+                </p:button>
+            </p:outputPanel>
+
+        </p:outputPanel>
+
+    </h:body>
+</html>

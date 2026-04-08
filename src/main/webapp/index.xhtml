@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="style.css" />
+        <title>Home</title>
+    </h:head>
+
+    <h:body>
+        <p:menubar>
+            <f:facet name="start">
+                <h:link value="KeyStore" outcome="index" style="font-weight:bold; font-size:32px " />
+            </f:facet>
+            <f:facet name="end">
+                <h:link value="New Product" outcome="addProduct" style="margin-right:15px;" />
+                <p:divider layout="vertical"/>
+                <h:link value="Register" outcome="register" style="margin-left:15px;" />
+            </f:facet>
+        </p:menubar>
+
+        <h:panelGroup layout="block">         
+            <h:panelGroup layout="block" class="hero-content" 
+                          style="margin: 4rem auto; text-align: center; max-width: 800px; color: black;">
+
+                <h:outputText value="Welcome to Our Store" 
+                              style="font-weight:bold; font-size:52px; display: block; margin-bottom: 10px;" />
+
+                <p:divider style="width: 50%; margin: 20px auto;" />
+
+                <h:outputText value="Discover amazing products at great prices" 
+                              style="font-size:18px; display: block; color: #666;" />
+
+            </h:panelGroup>
+
+            <h:outputText value="All Products" style="font-weight:bold; font-size:32px;" />
+            <h:panelGroup layout="block">
+                <p:dataScroller value="#{productBean.list}" var="p" chunkSize="10" mode="document">
+                    <p:card class="product-item" style="border:1px #f3f1f1 solid; margin: 2rem 0;">
+                        <h:panelGroup class="ui-g">
+                            <h:panelGroup class="ui-g-12 ui-md-2" style="text-align: center;">
+                                <p:graphicImage value="#{p.image}" style="width: 80px; height: 80px; object-fit: contain; border-radius: 4px;" />
+                            </h:panelGroup>
+
+                            <h:panelGroup class="ui-g-12 ui-md-7">
+                                <h:outputText value="#{p.name}" style="font-size: 18px; font-weight: bold; display: block;" />
+                                <h:outputText value="#{p.description}" style="font-size: 14px; color: #666; display: block; margin-top: 5px;" />
+                                <h:outputText value="Seller: #{p.sellerName}" style="font-size: 12px; color: #999; display: block; margin-top: 5px;" />
+                            </h:panelGroup>
+
+                            <h:panelGroup class="ui-g-12 ui-md-3" style="text-align: right;">
+                                <h:outputText value="#{p.price}" style="font-size: 22px; font-weight: bold; color: #2c3e50; display: block; margin-bottom: 10px;">
+                                    <f:convertNumber type="currency" />
+                                </h:outputText>
+                                <p:button outcome="product" value="View Details" icon="pi pi-search" styleClass="ui-button-raised">
+                                    <f:param name="id" value="#{p.id}" />
+                                </p:button>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </p:card>
+
+                    <f:facet name="loader">
+                        <h:panelGroup layout="block" style="text-align: center; padding: 20px;">
+                            <p:commandButton type="button" value="More Products" icon="pi pi-refresh" styleClass="ui-button-outlined" />
+                        </h:panelGroup>
+                    </f:facet>
+
+                </p:dataScroller>
+            </h:panelGroup>
+        </h:panelGroup>
+
+
+    </h:body>
+</html>

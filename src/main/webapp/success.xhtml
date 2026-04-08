@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="primefaces">
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="style.css" />
+        <title>Success</title>
+    </h:head>
+
+    <f:metadata>
+        <f:viewParam name="orderId" value="#{orderBean.id}" />
+        <f:viewAction action="#{orderBean.load}" />
+    </f:metadata>
+
+    <h:body>
+        <p:menubar>
+            <f:facet name="start">
+                <h:link value="KeyStore" outcome="index" style="font-weight:bold; font-size:32px " />
+            </f:facet>
+            <f:facet name="end">
+                <h:link value="New Product" outcome="addProduct" style="margin-right:15px;" />
+                <h:link value="Register" outcome="register" style="margin-left:15px;" />
+            </f:facet>
+        </p:menubar>
+
+        <p:outputPanel id="successContainer" style="text-align: center; padding: 3rem 1rem;">
+
+            <p:outputPanel id="successHeader" style="margin-bottom: 2rem;">
+                <i class="pi pi-check-circle" style="font-size: 3rem; color: #4caf50; margin-bottom: 1rem;"></i>
+                <h1 style="font-size: 1.5rem; font-weight: bold; margin: 0 0 0.5rem 0;">Payment Successful</h1>
+                <h:outputText value="Your keys are ready to use" style="font-size: 0.875rem; color: #777;" />
+            </p:outputPanel>
+
+            <p:outputPanel id="keySection" style="margin-bottom: 2.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+
+                <h:outputText value="#{orderBean.order.productName}" 
+                              style="font-weight: 600; color: #333; font-size: 1.1rem;" />
+
+                <p:commandButton value="#{orderBean.order.product_key}" 
+                                 icon="pi pi-copy"
+                                 onclick="navigator.clipboard.writeText('#{orderBean.order.product_key}')"
+                                 styleClass="ui-button-flat ui-button-secondary"
+                                 style="font-family: monospace; background-color: #f8f9fa; border: 1px dashed #ccc; padding: 0.5rem 1rem;"
+                                 type="button">
+                    <p:tooltip for="@parent" value="Click to copy to clipboard" position="bottom"/>
+                </p:commandButton>
+
+                <h:outputText value="Click to copy to clipboard" style="font-size: 0.75rem; color: #999;" />
+            </p:outputPanel>
+
+            <p:outputPanel id="actions" style="display: flex; justify-content: center; gap: 1rem;">
+                <p:button outcome="index.xhtml" 
+                          value="Back to Store" 
+                          icon="pi pi-home"
+                          styleClass="ui-button-outlined ui-button-secondary" />
+            </p:outputPanel>
+
+        </p:outputPanel>
+    </h:body>
+</html>
