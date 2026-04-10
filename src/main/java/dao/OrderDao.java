@@ -41,9 +41,9 @@ public class OrderDao {
     }
 
     public Order findById(int id) throws Exception {
-        String SQL = "SELECT po.*, p.name AS product_name, p.price, p.product_key\n"
+        String SQL = "SELECT po.*, p.name AS product_name, p.price AS product_price, p.product_key AS productKey, p.image AS product_image\n"
                 + "FROM purchase_order po\n"
-                + "JOIN product p ON po.product_id = p.id\n"
+                + "LEFT JOIN product p ON po.product_id = p.id\n"
                 + "WHERE po.id=?";
         PreparedStatement preparedStatement = connection.prepareStatement(SQL);
         preparedStatement.setInt(1, id);
@@ -52,37 +52,33 @@ public class OrderDao {
         Order order = null;
         if (resultSet.next()) {
             order = new Order();
-
             order.setId(resultSet.getInt("id"));
             order.setCustomerId(resultSet.getInt("customer_id"));
             order.setProductId(resultSet.getInt("product_id"));
             order.setCreatedAt(resultSet.getString("created_at"));
 
             order.setProductName(resultSet.getString("product_name"));
-            order.setProductPrice(resultSet.getDouble("price"));
-            order.setProduct_key(resultSet.getString("product_key"));
+            order.setProductPrice(resultSet.getDouble("product_price"));
+            order.setProductKey(resultSet.getString("productKey"));
+            order.setProductImage(resultSet.getString("product_image"));
         }
-        connection.close();
         return order;
     }
 
-    public int create(Order order) throws Exception {
+    public int create(Connection con, Order order) throws Exception {
         String SQL = "INSERT INTO purchase_order (product_id, customer_id, created_at) VALUES (?, ?, NOW())";
 
-        PreparedStatement preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement preparedStatement = con.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setInt(1, order.getProductId());
         preparedStatement.setInt(2, order.getCustomerId());
         preparedStatement.executeUpdate();
 
-        ResultSet resultSet = preparedStatement.getGeneratedKeys();
-        int orderId = 0;
-
-        if (resultSet.next()) {
-            orderId = resultSet.getInt(1);
+        try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
         }
-
-        connection.close();
-        return orderId;
+        return 0;
     }
 
 }

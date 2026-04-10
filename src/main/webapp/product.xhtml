@@ -16,6 +16,7 @@
     </f:metadata>
 
     <h:body>
+        <h:outputText value="Welcome, #{loginBean.customer.name}" rendered="#{not empty loginBean.customer}" />
         <p:menubar>
             <f:facet name="start">
                 <h:link value="KeyStore" outcome="index" style="font-weight:bold; font-size:32px " />
@@ -59,16 +60,13 @@
                 </h:panelGrid>
             </p:card>
 
-            <p:panel style="margin-bottom: 2rem;">
-                <h:form styleClass="ui-fluid">
-                    <h:outputText value="Ready to purchase this product?" style="display: block; margin-bottom: 1rem; color: #666;" />
-                    <p:commandButton value="Buy Now" 
-                                     action="#{orderBean.create(productBean.product.id)}" 
-                                     ajax="false" 
-                                     icon="pi pi-shopping-cart"
-                                     styleClass="ui-button-raised ui-button-warning" />
-                </h:form>
-            </p:panel>
+            <h:form>
+                <p:commandButton value="Buy Now"
+                                 action="#{orderBean.create(productBean.product.id)}"
+                                 icon="pi pi-shopping-cart"
+                                 ajax="false"
+                                 styleClass="ui-button-warning"/>
+            </h:form>
 
             <p:panel header="Reviews">
                 <p:dataScroller value="#{productBean.reviews}" var="r" chunkSize="10">

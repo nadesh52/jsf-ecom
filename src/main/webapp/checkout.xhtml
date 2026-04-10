@@ -11,12 +11,15 @@
     </h:head>
 
     <f:metadata>
+        <f:viewParam name="productId" value="#{orderBean.productId}" />
         <f:viewParam name="orderId" value="#{orderBean.id}" />
-        <f:viewAction action="#{orderBean.load}" />
+
+        <f:viewAction action="#{orderBean.initOrder}" rendered="#{empty param.orderId}" />
+        <f:viewAction action="#{orderBean.load}" rendered="#{not empty param.orderId}" />
     </f:metadata>
 
-
     <h:body>
+        <h:outputText value="Welcome, #{loginBean.customer.name}" rendered="#{not empty loginBean.customer}" />
         <p:menubar>
             <f:facet name="start">
                 <h:link value="KeyStore" outcome="index" style="font-weight:bold; font-size:32px " />
@@ -47,9 +50,11 @@
 
                     <h:panelGrid columns="2" style="width: 100%; padding: 1.25rem;">
                         <h:panelGroup style="display: flex; align-items: center; gap: 1rem;">
-                            <p:outputPanel style="width: 64px; height: 64px; border: 1px solid #dee2e6; border-radius: 8px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #fff;">
-                                <p:graphicImage value="/resources/images/placeholder.png" style="width: 100%; height: 100%; object-fit: contain;" />
-                            </p:outputPanel>
+                            <h:panelGroup class="ui-g-12 ui-md-2" style="text-align: center;">
+                                <img src="#{orderBean.order.productImage}" 
+                                     style="width: 80px; height: 80px; object-fit: contain; border-radius: 4px;" 
+                                     alt="Image" />
+                            </h:panelGroup>
                             <h:outputText value="#{orderBean.order.productName}" style="font-size: 0.875rem; font-weight: 500;" />
                         </h:panelGroup>
 
@@ -70,17 +75,15 @@
                 </p:panel>
 
             </h:panelGroup>
-
-            <p:outputPanel style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
-                <p:button outcome="success" 
-                          value="Checkout" 
-                          icon="pi pi-check-circle"
-                          styleClass="ui-button-raised ui-button-success"
-                          style="padding: 0.5rem 2rem;">
-                    <f:param name="orderId" value="#{orderBean.order.id}" />
-                </p:button>
-            </p:outputPanel>
-
+            <h:form id="checkoutForm">
+                <p:outputPanel style="display: flex; justify-content: flex-end; margin-top: 1.5rem;">
+                    <p:commandButton value="Confirm Checkout" 
+                                     action="#{orderBean.confirmOrder}" 
+                                     update="@form"
+                                     icon="pi pi-check" 
+                                     styleClass="ui-button-success" />
+                </p:outputPanel>
+            </h:form>
         </p:outputPanel>
 
     </h:body>

@@ -9,12 +9,13 @@ public class Order {
     private String productName;
     private String createdAt;
     private double productPrice;
-    private String product_key;
+    private String productKey;
+    private String productImage;
 
     public Order() {
     }
 
-    public Order(int id, int customerId, int productId, String customerName, String productName, String createdAt, double productPrice, String product_key) {
+    public Order(int id, int customerId, int productId, String customerName, String productName, String createdAt, double productPrice, String productKey, String productImage) {
         this.id = id;
         this.customerId = customerId;
         this.productId = productId;
@@ -22,7 +23,8 @@ public class Order {
         this.productName = productName;
         this.createdAt = createdAt;
         this.productPrice = productPrice;
-        this.product_key = product_key;
+        this.productKey = productKey;
+        this.productImage = productImage;
     }
 
     public int getId() {
@@ -81,12 +83,20 @@ public class Order {
         this.productPrice = productPrice;
     }
 
-    public String getProduct_key() {
-        return product_key;
+    public String getProductKey() {
+        return productKey;
     }
 
-    public void setProduct_key(String product_key) {
-        this.product_key = product_key;
+    public void setProductKey(String productKey) {
+        this.productKey = productKey;
+    }
+
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
     }
 
 }

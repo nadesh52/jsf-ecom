@@ -16,6 +16,7 @@
     </f:metadata>
 
     <h:body>
+        <h:outputText value="Welcome, #{loginBean.customer.name}" rendered="#{not empty loginBean.customer}" />
         <p:menubar>
             <f:facet name="start">
                 <h:link value="KeyStore" outcome="index" style="font-weight:bold; font-size:32px " />
@@ -39,9 +40,9 @@
                 <h:outputText value="#{orderBean.order.productName}" 
                               style="font-weight: 600; color: #333; font-size: 1.1rem;" />
 
-                <p:commandButton value="#{orderBean.order.product_key}" 
+                <p:commandButton value="#{orderBean.order.productKey}" 
                                  icon="pi pi-copy"
-                                 onclick="navigator.clipboard.writeText('#{orderBean.order.product_key}')"
+                                 onclick="navigator.clipboard.writeText('#{orderBean.order.productKey}')"
                                  styleClass="ui-button-flat ui-button-secondary"
                                  style="font-family: monospace; background-color: #f8f9fa; border: 1px dashed #ccc; padding: 0.5rem 1rem;"
                                  type="button">

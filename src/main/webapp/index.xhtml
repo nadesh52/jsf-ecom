@@ -11,9 +11,7 @@
     </h:head>
 
     <h:body>
-        <p>Debug Session: #{sessionScope.userRole}</p>
-        <p>Email ใน Session: #{sessionScope.currentUser.email}</p>
-
+        <h:outputText value="Welcome, #{loginBean.customer.name}" rendered="#{not empty loginBean.customer}" />
         <p:menubar>
             <f:facet name="start">
                 <h:link value="KeyStore" outcome="index" style="font-weight:bold; font-size:32px " />
