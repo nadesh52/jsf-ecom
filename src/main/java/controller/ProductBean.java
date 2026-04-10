@@ -5,10 +5,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import dao.ProductDao;
 import dao.ReviewDao;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
+import java.util.Base64;
 import model.Product;
 import model.Review;
+import org.primefaces.event.FileUploadEvent;
 
 @Named("productBean")
 @ViewScoped
@@ -32,6 +36,19 @@ public class ProductBean implements Serializable {
 
     public Product getProduct() {
         return product;
+    }
+
+    public void checkAdminAccess() {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        String role = (String) ec.getSessionMap().get("userRole");
+
+        if (role == null || !role.equalsIgnoreCase("ADMIN")) {
+            try {
+                ec.redirect(ec.getRequestContextPath() + "/index.xhtml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void load() {
@@ -66,5 +83,18 @@ public class ProductBean implements Serializable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+        try {
+            byte[] bytes = event.getFile().getContent();
+            String contentType = event.getFile().getContentType();
+
+            String base64Str = "data:" + contentType + ";base64," + Base64.getEncoder().encodeToString(bytes);
+
+            this.product.setImage(base64Str);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -51,7 +51,12 @@ public class CustomerDao {
             customer = new Customer();
             customer.setId(resultSet.getInt("id"));
             customer.setName(resultSet.getString("name"));
+
+            customer.setEmail(resultSet.getString("email"));
+            customer.setRole(resultSet.getString("role"));
         }
+        resultSet.close();
+        preparedStatement.close();
         return customer;
     }
 

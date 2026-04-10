@@ -2,6 +2,8 @@ package controller;
 
 import dao.CustomerDao;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.ExternalContext;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import java.io.Serializable;
 import model.Customer;
@@ -40,10 +42,15 @@ public class LoginBean implements Serializable {
             customer = customerDao.login(email, password);
 
             if (customer != null) {
-                System.out.println("loged in");
+                ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
+                ec.getSessionMap().put("currentUser", customer);
+                ec.getSessionMap().put("userRole", customer.getRole());
+
+                System.out.println("loged in: " + customer.getEmail());
                 return "index?faces-redirect=true";
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }

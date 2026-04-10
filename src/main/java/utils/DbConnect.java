@@ -5,12 +5,13 @@ import java.sql.*;
 public class DbConnect {
     private static final String URL = "jdbc:mysql://localhost:3306/my_ecom";
     private static final String USERNAME = "root";
+    private static final String PASSWORD = "1234";
     private Connection connection;
 
     public Connection connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            this.connection = DriverManager.getConnection(URL, USERNAME, "");
+            this.connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             if (!this.connection.isClosed()) {
                 System.out.println("Connected to database.");
             } else {

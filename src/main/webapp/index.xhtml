@@ -11,6 +11,9 @@
     </h:head>
 
     <h:body>
+        <p>Debug Session: #{sessionScope.userRole}</p>
+        <p>Email ใน Session: #{sessionScope.currentUser.email}</p>
+
         <p:menubar>
             <f:facet name="start">
                 <h:link value="KeyStore" outcome="index" style="font-weight:bold; font-size:32px " />
@@ -39,10 +42,13 @@
             <h:outputText value="All Products" style="font-weight:bold; font-size:32px;" />
             <h:panelGroup layout="block">
                 <p:dataScroller value="#{productBean.list}" var="p" chunkSize="10" mode="document">
+
                     <p:card class="product-item" style="border:1px #f3f1f1 solid; margin: 2rem 0;">
                         <h:panelGroup class="ui-g">
                             <h:panelGroup class="ui-g-12 ui-md-2" style="text-align: center;">
-                                <p:graphicImage value="#{p.image}" style="width: 80px; height: 80px; object-fit: contain; border-radius: 4px;" />
+                                <img src="#{p.image}" 
+                                     style="width: 80px; height: 80px; object-fit: contain; border-radius: 4px;" 
+                                     alt="Image" />
                             </h:panelGroup>
 
                             <h:panelGroup class="ui-g-12 ui-md-7">
